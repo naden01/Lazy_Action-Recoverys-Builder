@@ -148,6 +148,7 @@ jobs:
     - name: repo pick
       run: |
         cd android-recovery
+        source build/envsetup.sh
         repopick -Q "branch:android-14+status:open+-change:7371+-change:7543+-change:7553+-change:7671+-change:7717+-change:7718"
 
     - name: Repo Sync again
