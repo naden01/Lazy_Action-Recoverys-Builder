@@ -158,12 +158,7 @@ jobs:
         source build/envsetup.sh
         repopick -Q "branch:android-14+status:open+-change:7543+-change:7671+-change:7718+-change:7763"
       continue-on-error: true
-        
-    - name: Repo Sync again
-      run: |
-        cd android-recovery
-        repo sync -j$(nproc --all) --force-sync
-        
+      
     - name: Clone Device Tree
       run: |
         cd android-recovery
