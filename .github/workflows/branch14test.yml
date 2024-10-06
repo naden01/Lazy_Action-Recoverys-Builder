@@ -12,14 +12,6 @@ on:
         - twrp-14
         - twrp-12.1
         - twrp-11
-        - twrp-10.0-deprecated
-        - twrp-9.0
-        - twrp-8.1
-        - twrp-8.1-macOS
-        - twrp-7.1
-        - twrp-6.0
-        - twrp-5.1
-        - twrp-4.4-deprecated
       DEVICE_TREE:
         description: 'Custom Recovery Tree' # Your already made Device Tree for TWRP
         required: true
@@ -119,7 +111,7 @@ jobs:
       id: manifest
       with:
         cond: ${{ github.event.inputs.MANIFEST_BRANCH == 'twrp-11' || github.event.inputs.MANIFEST_BRANCH == 'twrp-14' }}
-        if_true: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git
+        if_true: https://github.com/shekhawat2/platform_manifest_twrp_aosp.git
         if_false: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git
 
     - name: Initialize Repo
@@ -145,20 +137,6 @@ jobs:
         cd android-recovery
         repo sync -j$(nproc --all) --force-sync
 
-    - name: repo pick
-      run: |
-        cd android-recovery
-        source build/envsetup.sh
-        repopick -Q "branch:android-14+status:open+-change:7371+-change:7553+-change:7717+-change:7764+-change:7720"
-      continue-on-error: true
-
-    - name: repo pick againn
-      run: |
-        cd android-recovery
-        source build/envsetup.sh
-        repopick -Q "branch:android-14+status:open+-change:7543+-change:7671+-change:7718+-change:7763"
-      continue-on-error: true
-      
     - name: Clone Device Tree
       run: |
         cd android-recovery
@@ -178,6 +156,22 @@ jobs:
         fi
       continue-on-error: true
       
+    - name: Building Image 
+      run: |
+        cd android-recovery
+        source build/envsetup.sh
+        export ALLOW_MISSING_DEPENDENCIES=true
+        lunch ${{ env.DEVICE_MAKEFILE }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+        echo "Done building your ${{ github.event.inputs.BUILD_TARGET }}.img"
+      continue-on-error: true
+      
+    - name: repo pick
+      run: |
+        cd android-recovery
+        source build/envsetup.sh
+        repopick -Q "branch:android-14+status:open+-change:7371+-change:7543+-change:7553+-change:7671+-change:7717+-change:7718"
+      continue-on-error: true
+
     - name: Building Image 
       run: |
         cd android-recovery
