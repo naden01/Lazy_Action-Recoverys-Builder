@@ -6,7 +6,7 @@ on:
       MANIFEST:
         description: 'SHRP Manifest'
         required: true
-        default: 'https://github.com/SHRP/manifest.git'
+        default: 'https://github.com/SHRP-Reborn/manifest.git'
       MANIFEST_BRANCH:
         description: 'SHRP Manifest Branch'
         required: true
@@ -23,7 +23,7 @@ on:
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch' # Your Device Tree Branch, make sure it's right.
         required: true
-        default: 'android-14_shrp'
+        default: 'shrp'
       DEVICE_PATH:
         description: 'Specify your Device Path' # As is, just like your DEVICE_PATH in your BoardConfig.mk
         required: true
@@ -35,7 +35,7 @@ on:
       BUILD_TARGET:
         description: 'Specify your Build Target' # Pick among boot, recovery and vendor_boot
         required: true
-        default: 'recovery'
+        default: 'vendorboot'
         type: choice
         options:
         - boot
