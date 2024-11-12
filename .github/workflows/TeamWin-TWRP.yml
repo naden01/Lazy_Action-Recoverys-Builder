@@ -143,6 +143,11 @@ jobs:
       run: |
         cd android-recovery
         repo sync -j$(nproc --all) --force-sync
+        
+   - name: jemalloc5
+      run: |
+        cd android-recovery/external
+        git clone https://android.googlesource.com/platform/external/jemalloc libjemalloc5
       
     - name: Clone Device Tree
       run: |
