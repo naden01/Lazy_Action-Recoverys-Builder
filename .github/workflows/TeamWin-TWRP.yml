@@ -151,6 +151,11 @@ jobs:
         cd ${{ github.event.inputs.DEVICE_PATH }}
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
+    - name: jemalloc5
+      run: |
+        cd android-recovery/external
+        git clone https://android.googlesource.com/platform/external/jemalloc libjemalloc5
+
     - name: Check Build Makefile
       run: |
         cd android-recovery
