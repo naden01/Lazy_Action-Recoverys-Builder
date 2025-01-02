@@ -1,4 +1,4 @@
-name: SkyHawk [SHRP]
+name: SkyHawk [SHRP] reborn
 
 on:
   workflow_dispatch:
@@ -6,16 +6,14 @@ on:
       MANIFEST:
         description: 'SHRP Manifest'
         required: true
-        default: 'https://github.com/SHRP-Reborn/manifest.git'
+        default: 'https://github.com/naden01/manifest-sh.git'
       MANIFEST_BRANCH:
         description: 'SHRP Manifest Branch'
         required: true
-        default: 'v3_11.0'
+        default: 'shrp-12.1'
         type: choice
         options:
         - shrp-12.1
-        - v3_11.0
-        - shrp-9.0
       DEVICE_TREE:
         description: 'Custom Recovery Tree' # Your already made Device Tree for TWRP
         required: true
