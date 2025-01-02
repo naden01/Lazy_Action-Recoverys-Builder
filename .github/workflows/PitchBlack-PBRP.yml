@@ -22,7 +22,7 @@ on:
       DEVICE_PATH:
         description: 'Specify your Device Path' # As is, just like your DEVICE_PATH in your BoardConfig.mk
         required: true
-        default: 'device/realme/RMX1851'
+        default: 'device/'
       DEVICE_NAME:
         description: 'Specify your Device Codename' # As is, just like your PRODUCT_DEVICE in your device tree.
         required: true
@@ -30,13 +30,13 @@ on:
       BUILD_TARGET:
         description: 'Specify your Build Target' # Pick among boot, recovery and vendor_boot
         required: true
-        default: ''
+        default: 'vendorboot'
         type: choice
         options:
         - pbrp
-        - bootimage
-        - recoveryimage
-        - vendorbootimage
+        - boot
+        - recovery
+        - vendorboot
       LDCHECK:
         description: 'Use LDCHECK'
         required: false
@@ -144,7 +144,7 @@ jobs:
         cd android-recovery
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch ${{ env.DEVICE_MAKEFILE }}-eng && mka ${{ github.event.inputs.BUILD_TARGET }}
+        lunch ${{ env.DEVICE_MAKEFILE }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
 
     - name: Check Build Makefile
       run: |
